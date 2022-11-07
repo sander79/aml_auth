@@ -1,0 +1,35 @@
+ 
+spring.config.profiles: mock
+spring.main.allow-circular-references: true
+            
+Comment: >
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demodb
+    username: demo
+    password:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: update
+
+server:
+    port: 8081
+    context-path: /aml
+    error:
+       include-message: always
+
+logging:
+  level:
+    it.laterale.cloud: DEBUG
+
+security:
+  secret: secretsanderaml
+  prefix: 'Bearer '
+  param: Authorization
+
+admin:
+  email: admin@test.com
+  password: test
