@@ -1,4 +1,4 @@
-package it.sander.aml.repository;
+package it.sander.aml.domain.repository;
 
 import java.util.HashMap;
 import java.util.List;

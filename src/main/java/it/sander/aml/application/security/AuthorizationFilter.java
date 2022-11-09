@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import it.sander.aml.domain.model.User;
 import it.sander.aml.domain.model.UserRole;
-import it.sander.aml.repository.UserRepository;
+import it.sander.aml.domain.repository.UserRepository;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

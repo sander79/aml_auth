@@ -1,4 +1,4 @@
-package it.sander.aml.config;
+package it.sander.aml.application.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import it.sander.aml.application.security.AuthorizationFilter;
-import it.sander.aml.repository.UserRepository;
+import it.sander.aml.domain.repository.UserRepository;
+
 
 @Configuration
 @EnableWebSecurity
@@ -40,8 +40,8 @@ public class SecurityConfig {
         http.cors().and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new AuthorizationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), this.userRepository), UsernamePasswordAuthenticationFilter.class).authorizeRequests()
-                .antMatchers("/aml/authentication/**").permitAll()
+                .addFilterBefore(new AuthorizationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), this.userRepository), UsernamePasswordAuthenticationFilter.class)
+                .authorizeRequests().antMatchers("/aml/authentication/**").permitAll()
                 .anyRequest().authenticated();
         return http.build();
     }

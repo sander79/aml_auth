@@ -16,7 +16,7 @@ Comment: >
       ddl-auto: update
 
 server:
-    port: 8081
+    port: 8084
     context-path: /aml
     error:
        include-message: always
@@ -26,9 +26,11 @@ logging:
     it.laterale.cloud: DEBUG
 
 security:
+  issuer: sanderaml
   secret: secretsanderaml
   prefix: 'Bearer '
   param: Authorization
+  expireMinutes: 7200
 
 admin:
   email: admin@test.com
