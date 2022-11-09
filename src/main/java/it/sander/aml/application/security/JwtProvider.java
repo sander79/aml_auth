@@ -1,9 +1,10 @@
 package it.sander.aml.application.security;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTCreator;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.BeanInitializationException;
@@ -11,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Map;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 @Component
 public class JwtProvider {
@@ -39,7 +40,7 @@ public class JwtProvider {
         }
     }
 
-    public static String createJwt(String subject, Map<String, String> payloadClaims) {
+    public static String createJwt(String subject, List<String> roles) {
 
         final Date now = new Date();
         final Calendar expiration = new GregorianCalendar();
@@ -51,14 +52,9 @@ public class JwtProvider {
         		.withSubject(subject)
         		.withIssuer(issuer)
         		.withIssuedAt(now)
-        		.withExpiresAt(expiration.getTime());
+        		.withExpiresAt(expiration.getTime())
+        		.withClaim("roles", roles);
 
-        if (payloadClaims.isEmpty()) {
-            log.warn("You are building a JWT without header claims");
-        }
-        for (Map.Entry<String, String> entry : payloadClaims.entrySet()) {
-            builder.withClaim(entry.getKey(), entry.getValue());
-        }
         return builder.sign(Algorithm.HMAC256(JwtProvider.secret));
     }
 
